@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center">Factsparrow</h2>
+<div style="text-align:center" id= "login">
+    <h2>Login</h2>
+    <form id="myForm">
+      <div >
+        <label>Username  </label>
+        <input id="username" type="text">
+        
+      </div>
+      <br>
+      <div>
+        <label for="">Password  </label>
+        <input id="pass" type="password">     
+    </div>
+    <br>
+      <input type="submit">
+    </form>
+    <p id="p"></p>
+  </div> 
+
+<div class="card" id="card">
+  <img id="dp" src="" alt="fs_dp" style="width:70%">
+  <h1 id="myName"></h1>
+  <p class="title" id="email"></p>
+  <p id="address"></p>
+  <div style="margin: 24px 0;">
+    <a href="#"><i class="fa fa-dribbble"></i></a> 
+    <a href="#"><i class="fa fa-twitter"></i></a>  
+    <a href="#"><i class="fa fa-linkedin"></i></a>  
+    <a href="#"><i class="fa fa-facebook"></i></a> 
+  </div>
+  <p><button id="contact">Contact</button></p>
+</div>
+
+</body>
+<script>
+document.getElementById("card").style.display="none";
+
+const form=document.getElementById("myForm");
+    form.onsubmit=()=>{
+        event.preventDefault();
+       var email= document.getElementById("username").value;
+       var pass= document.getElementById("pass").value;
+       console.log(email,pass);
+       var querydata=null;
+       fetch("http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/login/loginByOtp/"+email+"/"+pass)
+         .then((response) =>{return response.text();})
+         .then((data)=>{console.log(data==='');
+         if(data===''){
+            document.getElementById("p").innerHTML="<h2>incorrect credentials<h2>"
+         }else{querydata=JSON.parse(data);
+            document.getElementById("myName").innerText=querydata.firstName+" "+querydata.lastName
+            document.getElementById("email").innerText=querydata.email
+            document.getElementById("dp").src="https://fsphotobucket.s3.ap-south-1.amazonaws.com/"+querydata.profilePic+".jpg"
+            document.getElementById("address").innerText=querydata.address.houseNo+" "+querydata.address.colonyName+" "+querydata.address.area+" "+querydata.address.city+" "+querydata.address.district+" "+querydata.address.state+" "+querydata.address.country
+            document.getElementById("contact").innerText="Contact : "+querydata.mobileNo
+            document.getElementById("login").style.display="none";
+            document.getElementById("card").style.display="block";
+         }
+        })
+
+        console.log("check final query data: ", querydata)
+
+        
+    }
+
+</script>
+</html>

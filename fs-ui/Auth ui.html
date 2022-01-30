@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    
+    <div class="login-box">
+        <h2>Factsparrow Auth</h2>
+        
+        <form id="myForm">
+          <div class="user-box">
+            <input id="username" type="text">
+            <label>Username</label>
+          </div>
+          
+          <input id="sub" type="submit">
+        </form>
+        <p id="p"></p>
+        <br>
+        <br>
+        <h2 id="some_div"></h2>
+      </div> 
+      
+</body>
+
+<script>
+    let x=0;  
+ let interval; 
+    const form=document.getElementById("myForm");
+
+    form.onsubmit=()=>{
+        document.getElementById("sub").style.display="none"
+getAuth();
+
+}
+
+function getAuth(){
+    console.log("start")
+ 
+ event.preventDefault();
+ var user= document.getElementById("username").value;
+ console.log(user);
+ fetch('http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/login/GenerateOtp/'+user)
+   .then((response) =>{return response.text();})
+   .then((data)=>{console.log(data);})
+
+
+   setTimeout(function(){
+     fetch('http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/login/getOtp/'+user)
+     .then((response) =>{return response.text();})
+     .then((data)=>{console.log(data);
+      document.getElementById("p").innerHTML="<h2>"+data+"</h2>"
+    })
+}, 1000);
+if(x==0){ 
+countdown30();
+x++;
+}
+
+
+
+interval=setInterval(() => {
+
+
+    console.log("start interval ",x)
+ 
+
+ var user= document.getElementById("username").value;
+ console.log(user);
+ fetch('http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/login/GenerateOtp/'+user)
+   .then((response) =>{return response.text();})
+   .then((data)=>{console.log(data);})
+
+
+   setTimeout(function(){
+     fetch('http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/login/getOtp/'+user)
+     .then((response) =>{return response.text();})
+     .then((data)=>{console.log(data);
+      document.getElementById("p").innerHTML="<h2>"+data+"</h2>"
+    })
+}, 1000); 
+if(x<3){
+countdown30();
+}
+
+x++;
+if(x==3){
+  clearInterval(interval)
+  alert("message from ishwar ---> bro ye last attempt h.. :) ")
+}
+
+
+}, 31000);
+
+
+
+function countdown30(){
+    var timeLeft = 30;
+var elem = document.getElementById('some_div');
+var timerId = setInterval(countdown, 1000);
+
+function countdown() {
+    if (timeLeft == -1) {
+        clearTimeout(timerId);
+        
+    } else {
+        elem.innerHTML = timeLeft + ' seconds remaining';
+        timeLeft--;
+    }
+}
+}
+
+}
+       
+
+</script>
+</html>
