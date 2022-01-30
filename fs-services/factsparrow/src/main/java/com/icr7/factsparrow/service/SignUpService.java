@@ -9,6 +9,6 @@ import com.icr7.factsparrow.model.FsUser;
 public interface SignUpService { 
 
 	public void saveNewUser(FsUser fsUser);
-	public void uploadDp(MultipartFile file, String email) throws IOException;
+	public String uploadDp(MultipartFile file, String email) throws IOException;
 	public String getFsUserDp(String email);
 }
