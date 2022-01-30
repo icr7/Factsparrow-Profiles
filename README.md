@@ -28,6 +28,8 @@ json body for save user data
 
 **1. backend links:** 
 save new -->(post) http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/api/signUp/saveNewUser
+![image](https://user-images.githubusercontent.com/85048174/151709208-60d40351-2a86-4b0a-8a6e-1ba76cea354e.png)
+
 
 upload image---> (post) http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/api/signUp/uploadDp
 ![image](https://user-images.githubusercontent.com/85048174/151708977-0982015e-10a4-417c-93df-c8232e096510.png)
