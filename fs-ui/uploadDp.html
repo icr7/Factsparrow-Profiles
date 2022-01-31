@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     
+
+
+
+</head>
+<body>
+    <div style="text-align:center">
+
+
+       <br><br><br><br><br><br><br><br><br><br>
+       <form id="uploadForm">
+       <label>Email  </label>
+        <input id="email" type="text" required>
+        <br><br>
+        <p style="color:rgb(236, 58, 3)">upload your favorite profile pic</p>
+ 
+        
+        <input type="file" id="dp" required>
+        <hr>
+        <br>
+        <input type="submit" id ="upload" value="upload">
+        <br>
+        <br>
+        <a id="suc" style="color: rgb(21, 161, 56);">Succesfully uploaded</a>
+        <br>
+    </form>
+        
+    </div>
+ 
+</body>
+
+<script>
+document.getElementById("suc").style.display="none";
+uploadForm.onsubmit=()=>{
+    event.preventDefault();
+    const myEmail=document.getElementById("email").value;
+    const button=document.getElementById("upload");
+    const myDp= document.getElementById("dp");
+    const formData=new FormData();
+    formData.append("file",myDp.files[0]);
+    document.getElementById("suc").style.display="block";
+
+fetch('http://fact1-env.eba-fdyeurck.ap-south-1.elasticbeanstalk.com/api/signUp/uploadDp?email='+myEmail, {
+  method: 'POST',
+  body: formData
+})
+.then(response => response.json())
+.then(result => {
+  console.log('Success:', result);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+}
+
+</script>
+
+</html>
